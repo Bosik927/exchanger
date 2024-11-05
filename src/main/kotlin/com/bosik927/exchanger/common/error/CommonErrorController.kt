@@ -1,6 +1,5 @@
 package com.bosik927.exchanger.common.error
 
-import jakarta.annotation.Priority
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

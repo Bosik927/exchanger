@@ -3,7 +3,7 @@ package com.bosik927.exchanger.account
 import com.bosik927.exchanger.account.dto.CreateAccountRequestDto
 import com.bosik927.exchanger.account.dto.AccountResponseDto
 import com.bosik927.exchanger.account.model.ExchangeAccount
-import java.util.*
+import java.util.UUID
 
 fun CreateAccountRequestDto.toEntity(): ExchangeAccount {
     return ExchangeAccount(
