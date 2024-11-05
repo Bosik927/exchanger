@@ -15,7 +15,9 @@ import org.springframework.web.server.ServerWebInputException
 class CommonErrorController {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException): ResponseEntity<ErrorDto> {
+    fun handleMethodArgumentNotValidException(
+        ex: MethodArgumentNotValidException
+    ): ResponseEntity<ErrorDto> {
         val errorsDescription = ex.bindingResult.fieldErrors.toString()
         val errorDto = ErrorDto(
             errorMessage = errorsDescription
@@ -34,7 +36,9 @@ class CommonErrorController {
     }
 
     @ExceptionHandler(NoResourceFoundException::class)
-    fun handleNoResourceFoundException(ex: NoResourceFoundException): ResponseEntity<ErrorDto> {
+    fun handleNoResourceFoundException(
+        ex: NoResourceFoundException
+    ): ResponseEntity<ErrorDto> {
         val errorDto = ErrorDto(
             errorMessage = "Resource not found."
         )
@@ -42,7 +46,9 @@ class CommonErrorController {
     }
 
     @ExceptionHandler(ServerWebInputException::class)
-    fun handleServerWebInputException(ex: ServerWebInputException): ResponseEntity<ErrorDto> {
+    fun handleServerWebInputException(
+        ex: ServerWebInputException
+    ): ResponseEntity<ErrorDto> {
         val errorDto = ErrorDto(
             errorMessage = "Failed to read HTTP message."
         )

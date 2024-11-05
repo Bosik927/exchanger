@@ -2,25 +2,22 @@ package com.bosik927.exchanger.account
 
 import com.bosik927.exchanger.account.exception.AccountNotFoundException
 import com.bosik927.exchanger.account.exception.IllegalUuidException
-import com.bosik927.exchanger.account.model.ExchangeAccount
-import jakarta.validation.Valid
+import com.bosik927.exchanger.account.model.Account
 import org.springframework.stereotype.Service
-import org.springframework.validation.annotation.Validated
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 @Service
-@Validated
-class ExchangeAccountService {
+class AccountService {
 
-    private val accounts = ConcurrentHashMap<UUID, ExchangeAccount>()
+    private val accounts = ConcurrentHashMap<UUID, Account>()
 
-    suspend fun fetchOne(uuid: String): ExchangeAccount {
+    suspend fun fetchOne(uuid: String): Account {
         val accountUuid = wrapToUuid(uuid)
         return accounts[accountUuid] ?: throw AccountNotFoundException(accountUuid)
     }
 
-    suspend fun create(@Valid account: ExchangeAccount): ExchangeAccount {
+    suspend fun create(account: Account): Account {
         accounts.put(account.uuid, account)
         return account
     }

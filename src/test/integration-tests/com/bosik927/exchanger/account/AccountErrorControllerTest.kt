@@ -7,7 +7,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import java.util.UUID
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ExchangeAccountErrorControllerTest {
+class AccountErrorControllerTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient

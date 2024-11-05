@@ -13,16 +13,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 @Order(AdviceControllerOrder.SPECIFIC)
-class ExchangeAccountErrorController {
+class AccountErrorController {
 
     @ExceptionHandler(IllegalUuidException::class)
-    fun handleIllegalUuidException(ex: IllegalUuidException): ResponseEntity<ErrorDto> {
+    fun handleIllegalUuidException(
+        ex: IllegalUuidException
+    ): ResponseEntity<ErrorDto> {
         val errorDto = ErrorDto(errorMessage = ex.message ?: "")
         return ResponseEntity(errorDto, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(AccountNotFoundException::class)
-    fun handleExchangeAccountNotFoundException(ex: AccountNotFoundException): ResponseEntity<ErrorDto> {
+    fun handleExchangeAccountNotFoundException(
+        ex: AccountNotFoundException
+    ): ResponseEntity<ErrorDto> {
         val errorDto = ErrorDto(
             errorMessage = ex.message ?: "Account not found"
         )

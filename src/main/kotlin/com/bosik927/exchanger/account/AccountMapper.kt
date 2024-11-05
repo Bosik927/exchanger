@@ -2,11 +2,11 @@ package com.bosik927.exchanger.account
 
 import com.bosik927.exchanger.account.dto.CreateAccountRequestDto
 import com.bosik927.exchanger.account.dto.AccountResponseDto
-import com.bosik927.exchanger.account.model.ExchangeAccount
+import com.bosik927.exchanger.account.model.Account
 import java.util.UUID
 
-fun CreateAccountRequestDto.toEntity(): ExchangeAccount {
-    return ExchangeAccount(
+fun CreateAccountRequestDto.toEntity(): Account {
+    return Account(
         uuid = UUID.randomUUID(),
         name = this.name,
         surname = this.surname,
@@ -14,7 +14,7 @@ fun CreateAccountRequestDto.toEntity(): ExchangeAccount {
     )
 }
 
-fun ExchangeAccount.toDto(): AccountResponseDto {
+fun Account.toResponseDto(): AccountResponseDto {
     return AccountResponseDto(
         uuid = this.uuid,
         name = this.name,
