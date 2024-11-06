@@ -32,6 +32,11 @@ dependencies {
 	}
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+
+	testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+	testImplementation("org.mockito:mockito-junit-jupiter:5.1.1")
 }
 
 kotlin {
@@ -46,7 +51,7 @@ tasks.withType<Test> {
 
 sourceSets {
 	test {
-		kotlin.srcDir("src/test/integration-tests")
+		kotlin.srcDirs("src/test/kotlin", "src/test/integration-tests")
 		resources.srcDir("src/test/resources")
 	}
 }

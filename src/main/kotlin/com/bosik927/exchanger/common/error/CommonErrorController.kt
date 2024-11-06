@@ -3,7 +3,6 @@ package com.bosik927.exchanger.common.error
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.reactive.resource.NoResourceFoundException
@@ -13,17 +12,6 @@ import org.springframework.web.server.ServerWebInputException
 @RestControllerAdvice
 @Order(AdviceControllerOrder.COMMON)
 class CommonErrorController {
-
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(
-        ex: MethodArgumentNotValidException
-    ): ResponseEntity<ErrorDto> {
-        val errorsDescription = ex.bindingResult.fieldErrors.toString()
-        val errorDto = ErrorDto(
-            errorMessage = errorsDescription
-        )
-        return ResponseEntity(errorDto, HttpStatus.BAD_REQUEST)
-    }
 
     @ExceptionHandler(MethodNotAllowedException::class)
     suspend fun handleMethodNotAllowedException(
@@ -40,7 +28,7 @@ class CommonErrorController {
         ex: NoResourceFoundException
     ): ResponseEntity<ErrorDto> {
         val errorDto = ErrorDto(
-            errorMessage = "Resource not found."
+            errorMessage = "Path not found."
         )
         return ResponseEntity(errorDto, HttpStatus.NOT_FOUND)
     }
@@ -50,7 +38,7 @@ class CommonErrorController {
         ex: ServerWebInputException
     ): ResponseEntity<ErrorDto> {
         val errorDto = ErrorDto(
-            errorMessage = "Failed to read HTTP message."
+            errorMessage = "Incorrect request body."
         )
         return ResponseEntity(errorDto, HttpStatus.BAD_REQUEST)
     }

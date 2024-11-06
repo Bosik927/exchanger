@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 
 @RestController
@@ -19,13 +20,14 @@ class AccountController(
 ) {
 
     @GetMapping("/{uuid}")
-    suspend fun fetchOne(@PathVariable uuid: String): ResponseEntity<AccountResponseDto> {
+    suspend fun fetchOne(@PathVariable uuid: UUID): ResponseEntity<AccountResponseDto> {
         val account = service.fetchOne(uuid)
         return ResponseEntity.ok(account.toResponseDto());
     }
 
     @PostMapping
     suspend fun create(@RequestBody request: CreateAccountRequestDto): ResponseEntity<AccountResponseDto> {
+        CreateAccountRequestValidator.validate(request)
         val account = service.create(request.toEntity())
         return ResponseEntity.ok(account.toResponseDto());
     }

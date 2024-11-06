@@ -5,5 +5,5 @@ import java.math.BigDecimal
 data class CreateAccountRequestDto(
     val name: String,
     val surname: String,
-    val initialBalance: BigDecimal
+    val initialPlnBalance: BigDecimal
 )

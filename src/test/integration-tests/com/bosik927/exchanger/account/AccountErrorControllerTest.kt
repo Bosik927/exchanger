@@ -13,9 +13,8 @@ class AccountErrorControllerTest {
     lateinit var webTestClient: WebTestClient
 
     @Test
-    fun `Should return NOT_FOUND for not exists account`() {
+    fun `get should return NOT_FOUND for not exists account`() {
         val notExistAccountUuid = UUID.randomUUID()
-
         webTestClient.get()
             .uri("/api/accounts/$notExistAccountUuid")
             .exchange()
@@ -25,11 +24,31 @@ class AccountErrorControllerTest {
     }
 
     @Test
-    fun `Should return BAD_REQUEST for not illegal uuid`() {
+    fun `get should return BAD_REQUEST for not illegal uuid`() {
         val notExistAccountUuid = "NOT_LEGAL_UUID"
 
         webTestClient.get()
             .uri("/api/accounts/$notExistAccountUuid")
+            .exchange()
+            .expectStatus().isBadRequest
+            .expectBody()
+            .jsonPath("$.errorMessage").exists()
+    }
+
+    @Test
+    fun `create should return BAD_REQUEST for not valid request`() {
+        val invalidRequestBody = """
+            {
+                "name": "ValidName",
+                "surname": "ValidName",
+                "initialPlnBalance": -100
+            }
+        """
+
+        webTestClient.post()
+            .uri("/api/accounts")
+            .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+            .bodyValue(invalidRequestBody)
             .exchange()
             .expectStatus().isBadRequest
             .expectBody()

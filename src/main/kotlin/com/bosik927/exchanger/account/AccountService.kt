@@ -1,7 +1,6 @@
 package com.bosik927.exchanger.account
 
 import com.bosik927.exchanger.account.exception.AccountNotFoundException
-import com.bosik927.exchanger.account.exception.IllegalUuidException
 import com.bosik927.exchanger.account.model.Account
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -12,9 +11,8 @@ class AccountService {
 
     private val accounts = ConcurrentHashMap<UUID, Account>()
 
-    suspend fun fetchOne(uuid: String): Account {
-        val accountUuid = wrapToUuid(uuid)
-        return accounts[accountUuid] ?: throw AccountNotFoundException(accountUuid)
+    suspend fun fetchOne(uuid: UUID): Account {
+        return accounts[uuid] ?: throw AccountNotFoundException(uuid)
     }
 
     suspend fun create(account: Account): Account {
@@ -22,11 +20,7 @@ class AccountService {
         return account
     }
 
-    private fun wrapToUuid(uuid: String): UUID {
-        return try {
-            UUID.fromString(uuid)
-        } catch (e: IllegalArgumentException) {
-            throw IllegalUuidException()
-        }
+    suspend fun update(uuid: UUID, account: Account) {
+        accounts.put(account.uuid, account)
     }
 }

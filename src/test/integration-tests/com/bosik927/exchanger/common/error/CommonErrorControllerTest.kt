@@ -8,7 +8,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CommonErrorControllerIntegrationTest {
+class CommonErrorControllerTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient
@@ -50,7 +50,7 @@ class CommonErrorControllerIntegrationTest {
             .exchange()
             .expectStatus().isNotFound
             .expectBody()
-            .jsonPath("$.errorMessage").isEqualTo("Resource not found.")
+            .jsonPath("$.errorMessage").isEqualTo("Path not found.")
     }
 
     @Test
@@ -64,6 +64,6 @@ class CommonErrorControllerIntegrationTest {
             .exchange()
             .expectStatus().isBadRequest
             .expectBody()
-            .jsonPath("$.errorMessage").isEqualTo("Failed to read HTTP message.")
+            .jsonPath("$.errorMessage").isEqualTo("Incorrect request body.")
     }
 }
